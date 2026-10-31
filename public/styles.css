@@ -108,7 +108,9 @@ label { display: block; color: var(--muted); font-size: 13px; margin: 14px 0 6px
 .op-cue .text { font-size: clamp(30px, 9vw, 72px); font-weight: 700; line-height: 1.1; }
 .op-cue .when { color: var(--muted); margin: 6px 0 12px; }
 .op.live .op-cue .when, .op.preview .op-cue .when { color: #ffffffcc; }
+.op-cue-actions { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
 .op-cue button { font-size: 20px; padding: 14px 28px; }
+.op-cue-actions button { font-size: 16px; padding: 10px 16px; }
 .op-replies { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; padding-top: 16px; }
 .op-replies button { padding: 14px 8px; background: #00000040; border-color: #ffffff30; }
 .op-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }

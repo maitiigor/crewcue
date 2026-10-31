@@ -10,7 +10,7 @@ const isStandalone = matchMedia('(display-mode: standalone)').matches || navigat
 const pushSupported = 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
 
 let me = store.get('crewcue.me'); // { code, name, cameraId, cameraName }
-let cfg = null, ws, retry, currentCue = null, speak = !!store.get('crewcue.speak'), wakeLock = null;
+let cfg = null, ws, retry, currentCue = null, tally = 'off', autoCueFor = null, speak = !!store.get('crewcue.speak'), wakeLock = null;
 
 const show = (id) => ['install', 'setup', 'main'].forEach((x) => $('#' + x).classList.toggle('hidden', x !== id));
 
@@ -121,19 +121,55 @@ function setTally(t) {
   main.classList.toggle('live', t === 'live');
   main.classList.toggle('preview', t === 'preview');
   $('#tallyText').textContent = t === 'live' ? 'LIVE' : t === 'preview' ? 'STAND BY' : 'OFF AIR';
+  tally = t;
+  // An auto alert ("STAND BY — you're next", "YOU'RE LIVE") is stale once the tally moves on.
+  if (autoCueFor && autoCueFor !== t) {
+    autoCueFor = null;
+    $('#cueText').textContent = '';
+    $('#cueWhen').textContent = '';
+    navigator.serviceWorker?.getRegistration()
+      .then((reg) => reg?.getNotifications({ tag: `tally-${me?.cameraId}` }))
+      .then((list) => list?.forEach((n) => n.close()))
+      .catch(() => {});
+  }
 }
 
 function showCue(cue) {
+  autoCueFor = cue.kind === 'auto' ? tally : null;
   $('#cueText').textContent = cue.text;
   $('#cueWhen').textContent = (cue.target === 'all' ? 'To everyone · ' : '') + new Date(cue.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   if (cue.kind === 'cue') { currentCue = cue; $('#ackBtn').classList.remove('hidden'); $('#ackBtn').disabled = false; $('#ackBtn').textContent = 'Got it ✓'; }
   else { currentCue = null; $('#ackBtn').classList.add('hidden'); }
   navigator.vibrate?.([200, 100, 200]);
+  if (document.visibilityState === 'visible') playCueTone();
   if (speak && 'speechSynthesis' in window) {
     speechSynthesis.cancel();
     speechSynthesis.speak(new SpeechSynthesisUtterance(cue.text.replace(/[^\p{L}\p{N}\s'’,.—-]/gu, '')));
   }
 }
+
+let cueAudioCtx;
+function playCueTone() {
+  try {
+    cueAudioCtx ||= new AudioContext();
+    if (cueAudioCtx.state === 'suspended') cueAudioCtx.resume().catch(() => {});
+    const o = cueAudioCtx.createOscillator();
+    const g = cueAudioCtx.createGain();
+    o.type = 'triangle';
+    o.frequency.setValueAtTime(880, cueAudioCtx.currentTime);
+    g.gain.setValueAtTime(0.0001, cueAudioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.18, cueAudioCtx.currentTime + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, cueAudioCtx.currentTime + 0.55);
+    o.connect(g).connect(cueAudioCtx.destination);
+    o.start();
+    o.stop(cueAudioCtx.currentTime + 0.6);
+  } catch {}
+}
+
+$('#playCueBtn').addEventListener('click', () => {
+  if (currentCue) playCueTone();
+  else toast('No active cue yet');
+});
 
 $('#ackBtn').addEventListener('click', () => {
   if (!currentCue) return;
