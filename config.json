@@ -1,0 +1,46 @@
+{
+  "port": 3000,
+  "directorPin": "1234",
+  "crewCode": "crew2026",
+  "contactEmail": "mailto:you@example.com",
+
+  "vmix": {
+    "host": "127.0.0.1",
+    "tcpPort": 8099
+  },
+
+  "cameras": [
+    { "id": "cam1", "name": "Camera 1", "input": 1 },
+    { "id": "cam2", "name": "Camera 2", "input": 2 },
+    { "id": "cam3", "name": "Camera 3", "input": 3 },
+    { "id": "cam4", "name": "Camera 4", "input": 4 }
+  ],
+
+  "autoAlerts": {
+    "live": true,
+    "standby": true,
+    "standbyDelayMs": 1500
+  },
+
+  "cues": [
+    "Stand by",
+    "Go wider",
+    "Tighter",
+    "Pan left",
+    "Pan right",
+    "Tilt up",
+    "Tilt down",
+    "Hold steady",
+    "Refocus",
+    "Find the speaker",
+    "Crowd shot",
+    "Clear — you're free"
+  ],
+
+  "replies": [
+    "Ready",
+    "Repositioning",
+    "Battery low",
+    "Problem — need help"
+  ]
+}

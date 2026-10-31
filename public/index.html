@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>CrewCue</title>
+  <meta name="theme-color" content="#0f1115">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CrewCue">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="icon" href="/icons/icon-192.png">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <!-- Step 1 (iPhone in Safari): install to Home Screen -->
+  <div id="install" class="center-box hidden">
+    <h1>Install CrewCue</h1>
+    <p class="muted">iPhones only show pop-up cues for apps on the Home Screen. Do this once:</p>
+    <div class="card">
+      <ol class="steps">
+        <li>Tap the <strong>Share</strong> button (square with an arrow) in Safari.</li>
+        <li>Choose <strong>Add to Home Screen</strong>, then <strong>Add</strong>.</li>
+        <li>Close Safari and open <strong>CrewCue</strong> from your Home Screen.</li>
+      </ol>
+    </div>
+    <p class="muted" style="font-size:13px">Needs iOS 16.4 or newer. Using Chrome on iPhone? Open this link in Safari instead.</p>
+  </div>
+
+  <!-- Step 2: who are you -->
+  <div id="setup" class="center-box hidden">
+    <h1>Join the crew</h1>
+    <form id="setupForm" class="card">
+      <label for="code">Crew code</label>
+      <input id="code" autocomplete="off" autocapitalize="off" required>
+      <label for="name">Your name</label>
+      <input id="name" maxlength="40" required>
+      <label for="camera">Your camera</label>
+      <select id="camera" required disabled><option>Enter crew code first…</option></select>
+      <p id="setupErr" class="hidden" style="color:var(--live)"></p>
+      <button class="primary" style="width:100%;margin-top:16px">Continue</button>
+    </form>
+  </div>
+
+  <!-- Step 3: main operator screen -->
+  <div id="main" class="op hidden">
+    <div class="op-top">
+      <h1 id="camName">Camera</h1>
+      <span id="connDot" class="dot" title="Connection"></span>
+    </div>
+
+    <div id="pushBanner" class="banner hidden">
+      <strong>Turn on pop-up cues</strong>
+      <div style="margin:4px 0 10px">So the director's messages appear on top of Iriun.</div>
+      <button id="enablePush" class="primary">Enable pop-ups</button>
+    </div>
+
+    <div id="tallyText" class="op-state">OFF AIR</div>
+
+    <div class="op-cue">
+      <div id="cueText" class="text"></div>
+      <div id="cueWhen" class="when"></div>
+      <button id="ackBtn" class="hidden">Got it ✓</button>
+    </div>
+
+    <div id="replies" class="op-replies"></div>
+
+    <div class="op-tools">
+      <button id="testPush" class="hidden">Test pop-up</button>
+      <button id="speakBtn">🔈 Speak cues: off</button>
+      <button id="wakeBtn">Keep screen on: off</button>
+      <button id="changeBtn">Change camera</button>
+    </div>
+    <p class="muted" style="font-size:12px;text-align:center;margin:12px 0 0">
+      Running Iriun? Leave it open — cues pop up on top. Swipe banners away; tapping opens this app and pauses Iriun.
+    </p>
+  </div>
+
+  <script src="/op.js"></script>
+</body>
+</html>

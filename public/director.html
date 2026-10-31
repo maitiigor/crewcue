@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CrewCue — Director</title>
+  <link rel="icon" href="/icons/icon-192.png">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="login" class="center-box">
+    <h1>CrewCue Director</h1>
+    <p class="muted">Enter the director PIN from config.json.</p>
+    <form id="loginForm" class="card">
+      <label for="pin">Director PIN</label>
+      <input id="pin" type="password" inputmode="numeric" autocomplete="current-password" required>
+      <p id="loginErr" class="hidden" style="color:var(--live)"></p>
+      <button class="primary" style="width:100%;margin-top:14px">Open console</button>
+    </form>
+  </div>
+
+  <div id="app" class="hidden">
+    <header class="d-head">
+      <h1>CrewCue</h1>
+      <span><span id="vmixDot" class="dot"></span> <span id="vmixText">vMix</span></span>
+      <span><span id="wsDot" class="dot"></span> <span id="wsText">Server</span></span>
+      <label style="margin:0;display:flex;gap:6px;align-items:center;color:var(--text)">
+        <input id="soundToggle" type="checkbox" checked style="width:auto"> Sound on reply
+      </label>
+    </header>
+    <main class="d-main">
+      <section id="cams" class="cams"></section>
+      <aside class="side">
+        <div class="card">
+          <h3>Crew replies</h3>
+          <div id="replies" class="feed"><p class="muted" style="margin:0">Nothing yet.</p></div>
+        </div>
+        <div class="card">
+          <h3>Sent cues</h3>
+          <div id="log" class="feed"><p class="muted" style="margin:0">Nothing yet.</p></div>
+        </div>
+      </aside>
+    </main>
+  </div>
+  <script src="/director.js"></script>
+</body>
+</html>
