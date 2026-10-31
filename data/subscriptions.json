@@ -1,0 +1,15 @@
+[
+  {
+    "subscription": {
+      "endpoint": "https://fcm.googleapis.com/fcm/send/eyNc_xNuMGA:APA91bGD_Qs22i2zxHbIk9Xl5LWO8rRqB974e84H815-XkJBcJ58kJrxHDIWJwoeFeHTWSeEQeZcGM0J8PwmQ2eL19GLFkoE-4ilYBM7HGSm6PTLXy1EL5wWQdGER24pTXWM31QAsmW4",
+      "expirationTime": null,
+      "keys": {
+        "p256dh": "BFhknVw36O03YPCLbGt-iVpUTXGvlPktfMzybwZdMf6WmQzxMmFv5_nkDwJAZ7XSmQkKd7A2CaPHKXmQsfeSyrc",
+        "auth": "OoDsM8-Ngk2VagLUy1bFrg"
+      }
+    },
+    "cameraId": "cam1",
+    "operator": "Tosin",
+    "addedAt": 1793434036071
+  }
+]
